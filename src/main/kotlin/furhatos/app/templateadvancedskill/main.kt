@@ -18,11 +18,25 @@ fun main(args: Array<String>) {
     val personality = startingFlow()
 
     //TODO: Implement behavior based on personality
+    println("Ciao! Sono un robot. Beep-boop.")
+    val message = "Ciao robot!"
+    println(getResponseFromRobot(personality, message))
+}
+
+private fun getResponseFromRobot(personality: Personality, message: String): String {
     //Extrovertion < 4: talk less
     //Agreeableness < 4: be aggressive
     //Conscientiousness < 4: change subject often without user input
     //Emotional Stability < 4: be apprehensive, ask user not to leave
     //Openness < 4: discourage any idea of the user
+
+    val personalityModifier: String
+    if (personality.get(Personality.Traits.EXTROVERSION) < 4) {
+        personalityModifier = "Rispondi in modo timido"
+    } else {
+        personalityModifier = "Dai una risposta molto socievole"
+    }
+    return askOpenAI("${message} ${personalityModifier}")
 }
 
 fun startingFlow(): Personality {

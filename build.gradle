@@ -56,6 +56,12 @@ dependencies {
 
     implementation 'org.json:json:20231013'
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1"
+
+    // HTTP client (only used to communicate with openai)
+    implementation("com.squareup.okhttp3:okhttp:4.11.0")
+
+    // dotenv to protect sensitive data
+    implementation("io.github.cdimascio:dotenv-kotlin:6.2.2")
 }
 
 jar {

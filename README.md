@@ -20,7 +20,7 @@ For more example skills go to: https://github.com/FurhatRobotics/
 ## Usage
 Max number of users is set to: 5
 
-No other specific requirements. 
+You will need to specify an OpenAI API key in the `.env` file.
 
 ## Flow
 ### Start of skill

@@ -39,7 +39,7 @@ compileTestKotlin {
 repositories {
     mavenLocal()
     mavenCentral()
-    maven { url "https://s3-eu-west-1.amazonaws.com/furhat-maven/releases"}
+    maven { url "https://s3-eu-west-1.amazonaws.com/furhat-maven/releases" }
     maven { url 'https://repo.gradle.org/gradle/libs-releases' }
 }
 
@@ -55,6 +55,7 @@ dependencies {
     implementation("org.slf4j:slf4j-simple:2.0.7")
 
     implementation 'org.json:json:20231013'
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1"
 }
 
 jar {

@@ -3,12 +3,12 @@ package furhatos.app.templateadvancedskill
 import org.json.JSONObject
 import mu.KotlinLogging
 import kotlin.system.exitProcess
-import personalitytest.PersonalityTest.Attributes
 import java.io.BufferedReader
 import java.io.Closeable
 import java.io.IOException
 import java.net.Socket
 import java.net.UnknownHostException
+import furhatos.app.templateadvancedskill.PersonalityTest.Attributes
 
 class Client : Closeable {
     private val address = "127.0.0.1"

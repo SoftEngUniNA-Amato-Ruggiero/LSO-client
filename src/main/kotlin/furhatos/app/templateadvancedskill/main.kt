@@ -3,8 +3,6 @@ package furhatos.app.templateadvancedskill
 import furhatos.app.templateadvancedskill.flow.Init
 import furhatos.flow.kotlin.Flow
 import furhatos.skills.Skill
-import personalitytest.PersonalityTest
-import personalitytestrunner.PersonalityTestRunnerFromCLI
 
 class MyAdvancedSkill : Skill() {
     override fun start() {
@@ -14,35 +12,70 @@ class MyAdvancedSkill : Skill() {
 
 fun main(args: Array<String>) {
     // Skill.main(args)
-    // TODO: Move the following methods to some flow instead of main, and uncomment line above
-    val personality = startingFlow()
 
-    //TODO: Implement behavior based on personality
-    println("Ciao! Sono un robot. Beep-boop.")
-    val message = "Ciao robot!"
-    println(getResponseFromRobot(personality, message))
-}
+    // TODO: Move the following code to some flow instead of main, replace println and readln with calls to furhat api, and uncomment line above
 
-private fun getResponseFromRobot(personality: Personality, message: String): String {
-    //Extrovertion < 4: talk less
-    //Agreeableness < 4: be aggressive
-    //Conscientiousness < 4: change subject often without user input
-    //Emotional Stability < 4: be apprehensive, ask user not to leave
-    //Openness < 4: discourage any idea of the user
-
+    println("Ciao! Posso farti qualche domanda per conoscerti? [Y/N]")
     val personalityModifier: String
-    if (personality.get(Personality.Traits.EXTROVERSION) < 4) {
-        personalityModifier = "Rispondi in modo timido"
+
+    val input = readln()
+    if (input == "Y") {
+        val personality = getPersonality()
+        personalityModifier = setPersonalityModifier(personality)
     } else {
-        personalityModifier = "Dai una risposta molto socievole"
+        println("Va bene, risponderó in modo neutrale.")
+        personalityModifier = ""
     }
-    return askOpenAI("${message} ${personalityModifier}")
+    do {
+        val message = readln()
+        val response = askRobot(message, personalityModifier)
+        println(response)
+    } while (true)
 }
 
-fun startingFlow(): Personality {
+private fun askRobot(message: String, personalityModifier: String): String {
+    return askOpenAI("$message, $personalityModifier")
+}
+
+private fun setPersonalityModifier(personality: Personality): String {
+    var personalityModifier = "Senza usare emoji, dai una risposta "
+
+    if (personality.get(Personality.Traits.EXTROVERSION) < 4) {
+        personalityModifier += " timida,"
+    } else {
+        personalityModifier += " estroversa,"
+    }
+
+    if (personality.get(Personality.Traits.AGREEABLENESS) < 4) {
+        personalityModifier += " scortese, "
+    } else {
+        personalityModifier += " simpatica, "
+    }
+
+    if (personality.get(Personality.Traits.CONSCIENTIOUSNESS) < 4) {
+        personalityModifier += " distratta, "
+    } else {
+        personalityModifier += " affidabile, "
+    }
+
+    if (personality.get(Personality.Traits.EMOTIONAL_STABILITY) < 4) {
+        personalityModifier += " instabile, "
+    } else {
+        personalityModifier += " stabile, "
+    }
+
+    if (personality.get(Personality.Traits.OPENNESS) < 4) {
+        personalityModifier += " noiosa."
+    } else {
+        personalityModifier += " creativa."
+    }
+    return personalityModifier
+}
+
+fun getPersonality(): Personality {
     val test = PersonalityTest()
-    PersonalityTestRunnerFromCLI().run(test) //TODO: Run test from robot
-    val personality = getPersonalityFromServer(test.answers)
+    test.run() //TODO: Run test from robot
+    val personality = getPersonalityFromServer(test.getAnswers())
 
     for (trait in Personality.Traits.values()) {
         println("${trait.name}: ${personality.get(trait)}")

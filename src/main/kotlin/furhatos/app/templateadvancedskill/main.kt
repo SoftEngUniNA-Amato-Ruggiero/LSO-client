@@ -11,6 +11,6 @@ class MyAdvancedSkill : Skill() {
 }
 
 fun main(args: Array<String>) {
-    routine()
+//    routine()
     Skill.main(args)
 }

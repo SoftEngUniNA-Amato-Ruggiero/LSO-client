@@ -8,19 +8,21 @@ import java.io.Closeable
 import java.io.IOException
 import java.net.Socket
 import java.net.UnknownHostException
-import furhatos.app.templateadvancedskill.PersonalityTest.Attributes
+import furhatos.app.templateadvancedskill.personalitytest.PersonalityTest.Attributes
 
 class Client : Closeable {
-    private val address = "127.0.0.1"
-    private val port = 9999
-    private val logger = KotlinLogging.logger {}
+    companion object {
+        private const val ADDRESS = "127.0.0.1"
+        private const val PORT = 9999
+    }
 
     private var clientSocket: Socket
     private var reader: BufferedReader
+    private val logger = KotlinLogging.logger {}
 
     init {
         try {
-            clientSocket = Socket(address, port)
+            clientSocket = Socket(ADDRESS, PORT)
             reader = BufferedReader(clientSocket.inputStream.reader())
         } catch (e: UnknownHostException) {
             logger.error("Server not found", e)
@@ -37,7 +39,7 @@ class Client : Closeable {
         }
     }
 
-    fun requestBehavior(userAnswers: Map<Attributes, Int>): String {
+    fun getPersonalityJson(userAnswers: Map<Attributes, Int>): String {
         try {
             val userJson = JSONObject(userAnswers)
             clientSocket.outputStream.write(userJson.toString(4).toByteArray())

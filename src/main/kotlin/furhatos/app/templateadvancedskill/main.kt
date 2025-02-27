@@ -14,8 +14,7 @@ fun main(args: Array<String>) {
     // Skill.main(args)
 
     // TODO: Move the following code to some flow instead of main, replace println and readln with calls to furhat api, and uncomment line above
-
-    println("Ciao! Posso farti qualche domanda per conoscerti? [Y/N]")
+    println("Ciao! Posso farti qualche domanda per conoscerti meglio? [Y/N]")
     val personalityModifier: String
 
     val input = readln()
@@ -23,9 +22,11 @@ fun main(args: Array<String>) {
         val personality = getPersonality()
         personalityModifier = setPersonalityModifier(personality)
     } else {
-        println("Va bene, risponderó in modo neutrale.")
+        println("Va bene, allora risponderó in modo neutrale.")
         personalityModifier = ""
     }
+
+    println(askRobot("Ciao!", personalityModifier))
     do {
         val message = readln()
         val response = askRobot(message, personalityModifier)
@@ -38,7 +39,7 @@ private fun askRobot(message: String, personalityModifier: String): String {
 }
 
 private fun setPersonalityModifier(personality: Personality): String {
-    var personalityModifier = "Senza usare emoji, dai una risposta "
+    var personalityModifier = "Senza usare emoji, dai una breve risposta "
 
     if (personality.get(Personality.Traits.EXTROVERSION) < 4) {
         personalityModifier += " timida,"

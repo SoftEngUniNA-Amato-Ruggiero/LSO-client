@@ -9,7 +9,7 @@ import io.github.cdimascio.dotenv.Dotenv
 
 fun getApiKey(): String {
     val dotenv = Dotenv.load()
-    return dotenv["OPENAI_API_KEY"] ?: throw IllegalArgumentException("API key not found")
+    return dotenv["OPENAI_API_KEY"] ?: throw RuntimeException("API key not found")
 }
 
 fun askOpenAI(message: String): String {

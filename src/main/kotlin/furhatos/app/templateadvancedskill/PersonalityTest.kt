@@ -11,7 +11,7 @@ class PersonalityTest {
         const val MINIMUM_SCORE = 1
         const val MAXIMUM_SCORE = 7
 
-        const val TEST_DESCRIPTION = "Indicare in un punteggio da $MINIMUM_SCORE a $MAXIMUM_SCORE quanto i seguenti tratti di personalitá coincidono con la propria."
+        const val TEST_DESCRIPTION = "Indica in un punteggio da $MINIMUM_SCORE a $MAXIMUM_SCORE quanto la tua personalitá è..."
 
         private val questions: Map<Attributes, String> = EnumMap<Attributes, String>(Attributes::class.java).apply {
             put(Attributes.EXTROVERTED, "Estroversa, esuberante.")
@@ -33,6 +33,7 @@ class PersonalityTest {
 
     fun getAnswers(): Map<Attributes, Int> = answers
 
+    //TODO: Run test from robot and delete this method
     fun run() {
         println(TEST_DESCRIPTION)
         for ((attribute, question) in questions) {

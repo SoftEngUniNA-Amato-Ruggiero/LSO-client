@@ -1,6 +1,6 @@
-package furhatos.app.templateadvancedskill
+package furhatos.app.templateadvancedskill.personalitytest
 
-import java.util.EnumMap
+import java.util.*
 
 class PersonalityTest {
     enum class Attributes {
@@ -13,7 +13,7 @@ class PersonalityTest {
 
         const val TEST_DESCRIPTION = "Indica in un punteggio da $MINIMUM_SCORE a $MAXIMUM_SCORE quanto la tua personalitá è..."
 
-        private val questions: Map<Attributes, String> = EnumMap<Attributes, String>(Attributes::class.java).apply {
+        val QUESTIONS: Map<Attributes, String> = EnumMap<Attributes, String>(Attributes::class.java).apply {
             put(Attributes.EXTROVERTED, "Estroversa, esuberante.")
             put(Attributes.CRITICAL, "Polemica, litigiosa.")
             put(Attributes.DEPENDABLE, "Affidabile, auto-disciplinata.")
@@ -25,23 +25,11 @@ class PersonalityTest {
             put(Attributes.CALM, "Tranquilla, emotivamente stabile.")
             put(Attributes.CONVENTIONAL, "Tradizionalista, abitudinaria.")
         }
-
-        fun getQuestions(): Map<Attributes, String> = questions
     }
 
     private val answers: MutableMap<Attributes, Int> = EnumMap(Attributes::class.java)
 
     fun getAnswers(): Map<Attributes, Int> = answers
-
-    //TODO: Run test from robot and delete this method
-    fun run() {
-        println(TEST_DESCRIPTION)
-        for ((attribute, question) in questions) {
-            println(question)
-            val score = readlnOrNull()?.toIntOrNull() ?: throw IllegalArgumentException("Invalid input.")
-            setAnswer(attribute, score)
-        }
-    }
 
     fun setAnswer(attribute: Attributes, score: Int) {
         answers[attribute] = validateScore(score)
@@ -53,5 +41,4 @@ class PersonalityTest {
         }
         return score
     }
-
 }

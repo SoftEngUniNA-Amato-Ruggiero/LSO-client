@@ -7,9 +7,13 @@ import okhttp3.RequestBody.Companion.toRequestBody
 
 import io.github.cdimascio.dotenv.Dotenv
 
-fun getApiKey(): String {
-    val dotenv = Dotenv.load()
-    return dotenv["OPENAI_API_KEY"] ?: throw RuntimeException("API key not found")
+private fun getApiKey(): String {
+    try {
+        val dotenv = Dotenv.load()
+        return dotenv["OPENAI_API_KEY"]
+    } catch (e: Exception) {
+        return System.getenv("OPENAI_API_KEY") ?: throw RuntimeException("API key not found")
+    }
 }
 
 fun askOpenAI(message: String): String {

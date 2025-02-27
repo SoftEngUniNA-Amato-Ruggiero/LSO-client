@@ -9,4 +9,4 @@ else
 fi
 
 $docker build -t lso-client .
-$docker run -it -e OPENAI_API_KEY="${OPENAI_API_KEY}" --rm --name running-lso-client lso-client
+$docker run -it --rm --name running-lso-client lso-client

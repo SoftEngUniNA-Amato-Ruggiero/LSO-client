@@ -8,5 +8,6 @@ else
     docker="docker"
 fi
 
-$docker build -t lso-client .
-$docker run -it --rm --name running-lso-client lso-client
+$docker build -t lso-client . && \
+#$docker run -it --rm --name running-lso-client lso-client
+$docker run -it --network=host --rm --name running-lso-client lso-client

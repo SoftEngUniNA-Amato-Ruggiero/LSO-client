@@ -1,7 +1,6 @@
 plugins {
     id "org.jetbrains.kotlin.jvm" version "1.8.21"
     id 'com.github.johnrengelman.shadow' version '8.1.1'
-    id("org.sonarqube") version "6.0.1.5171"
 }
 
 apply plugin: 'java'
@@ -88,12 +87,4 @@ shadowJar {
     from "skill.properties"
     from "assets"
     //extension 'skill'
-}
-
-sonar {
-    properties {
-        property("sonar.projectKey", "SoftEngUniNA-Amato-Ruggiero_LSO-client")
-        property("sonar.organization", "softengunina-amato-ruggiero")
-        property("sonar.host.url", "https://sonarcloud.io")
-    }
 }

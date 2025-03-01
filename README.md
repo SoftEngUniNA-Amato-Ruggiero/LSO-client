@@ -10,7 +10,7 @@ Il questionario di personalitá utilizzato è il [TIPI](https://gosling.psy.utex
 Il robot utilizzato è [Furhat](https://docs.furhat.io/).
 
 Per informazioni sulle skill di Furhat si rimanda alla loro [documentazione](https://docs.furhat.io/). 
-Il template di partenza utilizzato è `Blank skill` di [FurhatRobotics](https://github.com/FurhatRobotics/)
+Il template di partenza utilizzato è `Blank skill` di [FurhatRobotics](https://github.com/FurhatRobotics/).
 
 ## Usage
 È necessaria una key per le API di OpenAI, ottenibile registrandosi su [OpenAI API Platform](https://openai.com/api/). 

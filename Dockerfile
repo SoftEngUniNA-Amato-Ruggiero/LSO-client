@@ -1,11 +1,5 @@
 FROM docker.io/eclipse-temurin:8
 
-ARG OPENAI_API_KEY
-ENV OPENAI_API_KEY=${OPENAI_API_KEY}
-
-# Use this with Docker Swarm for better security
-# ENV OPENAI_API_KEY=/run/secrets/openai_api_key
-
 COPY . /usr/src/lso-client
 WORKDIR /usr/src/lso-client
 

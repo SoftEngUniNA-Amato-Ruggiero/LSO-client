@@ -22,5 +22,10 @@ val Greeting: State = state(Parent) {
         furhat.say("Ok.")
         goto(conversation(null))
     }
+
+    onResponse {
+        furhat.say("Non ho capito, puoi ripetere?")
+        reentry()
+    }
 }
 

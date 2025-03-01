@@ -1,47 +1,92 @@
 package furhatos.app.clientlso.flow.main
 
-
-import furhatos.app.clientlso.askOpenAI
+//import furhatos.app.clientlso.askOpenAI
 import furhatos.app.clientlso.flow.Parent
+import furhatos.app.clientlso.getApiKey
 import furhatos.app.clientlso.personality.Personality
-import furhatos.flow.kotlin.State
-import furhatos.flow.kotlin.state
-import furhatos.flow.kotlin.furhat
-import furhatos.flow.kotlin.onResponse
+import furhatos.flow.kotlin.*
+import furhatos.gestures.Gestures
+import furhatos.nlu.common.Goodbye
+
+import io.github.sashirestela.openai.SimpleOpenAI
+import io.github.sashirestela.openai.domain.chat.ChatMessage
+import io.github.sashirestela.openai.domain.chat.ChatRequest
+
+/** Open AI API Key **/
+private val serviceKey = getApiKey()
+
+var personalityModifier: String? = null
+
+val openAI: SimpleOpenAI = SimpleOpenAI.builder()
+    .apiKey(serviceKey)
+    .build()
 
 val conversation: (Personality?) -> State = { personality ->
     state(Parent) {
-        val personalityModifier = getPersonalityModifier(personality)
-        var input: String
-
         onEntry {
+            if (personality != null) {
+                personalityModifier = getPersonalityModifier(personality)
+            }
+
+            furhat.say("Di cosa vogliamo parlare oggi?")
+            furhat.listen()
+        }
+
+        onReentry {
             furhat.listen()
         }
 
         onResponse {
-            input = it.text
-            furhat.say(getResponseFromOpenAI(input, personalityModifier))
+            furhat.say(async = true) {
+                +Gestures.GazeAway
+                random {
+                    +"uhm"
+                    +"allora"
+                }
+            }
+
+            val robotResponse = call {
+                getDialogCompletion()
+            } as String?
+            furhat.ask(robotResponse?:"Scusa, non ho capito. Puoi ripetere?")
             reentry()
         }
-    }
-}
 
-private fun getResponseFromOpenAI(message: String, personalityModifier: String?): String {
-    val question =
-        if (personalityModifier != null) {
-            "$message, $personalityModifier"
-        } else {
-            message
+        onNoResponse {
+            furhat.say("Mi dispiace, non ho sentito nulla.")
+            reentry()
         }
-    return askOpenAI(question)
+
+        onResponse<Goodbye> {
+            furhat.say("Arrivederci!")
+            goto(Idle)
+        }
+    }
 }
 
-private fun getPersonalityModifier(personality: Personality?): String? {
-    if (personality == null) {
-        return null
+fun getDialogCompletion(): String {
+    val chatRequestBuilder = ChatRequest.builder()
+        .model("gpt-4o-mini")
+        .message(ChatMessage.SystemMessage.of(personalityModifier?: "Rispondi brevemente"))
+
+    Furhat.dialogHistory.all.takeLast(10).forEach {
+        when (it) {
+            is DialogHistory.ResponseItem -> {
+                chatRequestBuilder.message(ChatMessage.UserMessage.of(it.response.text))
+            }
+            is DialogHistory.UtteranceItem -> {
+                chatRequestBuilder.message(ChatMessage.AssistantMessage.of(it.toText()))
+            }
+        }
     }
 
-    var personalityModifier = "Senza usare emoji, dai una risposta breve come se fossi una persona"
+    val futureChat = openAI.chatCompletions().create(chatRequestBuilder.build())
+    val chatResponse = futureChat.join()
+    return chatResponse.firstContent().toString()
+}
+
+private fun getPersonalityModifier(personality: Personality): String {
+    var personalityModifier = "Rispondi brevemente come una persona"
 
     if (personality.get(Personality.Traits.EXTROVERSION) < 4) {
         personalityModifier += " timida,"

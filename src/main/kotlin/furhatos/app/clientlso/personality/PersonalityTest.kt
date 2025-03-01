@@ -11,7 +11,7 @@ class PersonalityTest {
         const val MINIMUM_SCORE = 1
         const val MAXIMUM_SCORE = 7
 
-        const val TEST_DESCRIPTION = "Indica in un punteggio da $MINIMUM_SCORE a $MAXIMUM_SCORE quanto la tua personalitá è..."
+        const val TEST_DESCRIPTION = "Da $MINIMUM_SCORE a $MAXIMUM_SCORE, quanto pensi di essere..." //TODO: Cosí è al femminile, rendere gender neutral
 
         val QUESTIONS: Map<Attributes, String> = EnumMap<Attributes, String>(Attributes::class.java).apply {
             put(Attributes.EXTROVERTED, "Estroversa, esuberante.")

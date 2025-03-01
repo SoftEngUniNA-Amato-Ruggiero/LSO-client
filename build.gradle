@@ -65,7 +65,8 @@ jar {
     def normalizedName = lowerCasedName.substring(0,1).toUpperCase() + lowerCasedName.substring(1)
     manifest.attributes(
             'Class-Path': configurations.compileClasspath.collect { it.getName() }.join(' '),
-            'Main-Class': "furhatos.app.${lowerCasedName}.${normalizedName}Skill"
+//            'Main-Class': "furhatos.app.${lowerCasedName}.${normalizedName}Skill"
+            'Main-Class': "furhatos.app.clientlso.ClientlsoSkill"
     )
 }
 

@@ -13,9 +13,8 @@ Per informazioni sulle skill di furhat si rimanda alla [documentazione](https://
 Per il template di partenza utilizzato si rimanda a  [FurhatRobotics Github](https://github.com/FurhatRobotics/)
 
 ## Usage
-È necessaria una key per le API di OpenAI. La key puó essere salvata in un file ".env" nella root della repository.
-Max number of users is set to: 2
-Default interaction distance is set to: 1 m
+È necessaria una key per le API di OpenAI, ottenibile registrandosi su [OpenAI API Platform](https://openai.com/api/). 
+La key puó essere salvata in un file ".env" nella root della repository.
 
   ### Eseguire localmente:
   `chmod +x gradlew && ./gradlew clean shadowJar`
@@ -26,4 +25,4 @@ Default interaction distance is set to: 1 m
   `docker build -t lso-client .`
 
   `docker run -it --rm --name running-lso-client lso-client`
-
+  

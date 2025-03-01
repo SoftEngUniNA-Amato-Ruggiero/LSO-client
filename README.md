@@ -1,5 +1,5 @@
-# Skill
-LSO Client - Dialogare coi robot
+# LSO Client
+Dialogare coi robot
 
 ## Description
 Lato client del progetto di LSO anno 2024/2025.

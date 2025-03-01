@@ -9,7 +9,7 @@ Ottenuta una stima della personalitá dal server, il client usa openai per la ge
 Il questionario di personalitá utilizzato è il [TIPI](https://gosling.psy.utexas.edu/scales-weve-developed/ten-item-personality-measure-tipi/).
 Il robot utilizzato è [Furhat](https://docs.furhat.io/).
 
-Per informazioni sulle skill di Furhat si rimanda alla [documentazione](https://docs.furhat.io/). 
+Per informazioni sulle skill di Furhat si rimanda alla loro [documentazione](https://docs.furhat.io/). 
 Per il template di partenza utilizzato si rimanda a  [FurhatRobotics Github](https://github.com/FurhatRobotics/)
 
 ## Usage

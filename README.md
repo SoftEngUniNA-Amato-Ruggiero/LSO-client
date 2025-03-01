@@ -14,5 +14,14 @@ Per il template di partenza utilizzato si rimanda a  [FurhatRobotics Github](htt
 
 ## Usage
 È necessaria una key per le API di OpenAI. La key puó essere salvata in un file ".env" nella root della repository.
+
+Eseguire localmente:
+chmod +x gradlew && ./gradlew clean shadowJar
+java -jar build/libs/lso-client-all.skill
+
+Eseguire su container:
+docker build -t lso-client .
+docker run -it --rm --name running-lso-client lso-client
+
 Max number of users is set to: 2
 Default interaction distance is set to: 1 m

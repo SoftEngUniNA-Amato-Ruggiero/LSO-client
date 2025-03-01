@@ -1,18 +1,18 @@
 package furhatos.app.clientlso
 
-import org.json.JSONObject
+import furhatos.app.clientlso.personality.PersonalityTest.Attributes
 import mu.KotlinLogging
-import kotlin.system.exitProcess
+import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.Closeable
 import java.io.IOException
 import java.net.Socket
 import java.net.UnknownHostException
-import furhatos.app.clientlso.personality.PersonalityTest.Attributes
+import kotlin.system.exitProcess
 
 class Client : Closeable {
     companion object {
-        private const val ADDRESS = "127.0.0.1"
+        private val ADDRESS = serverAddress ?: "127.0.0.1"
         private const val PORT = 9999
     }
 
@@ -57,4 +57,4 @@ class Client : Closeable {
     }
 }
 
-class ServerOfflineException: RuntimeException("Server is offline")
+class ServerOfflineException : RuntimeException("Server is offline")

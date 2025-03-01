@@ -14,7 +14,8 @@ Per il template di partenza utilizzato si rimanda a  [FurhatRobotics Github](htt
 
 ## Usage
 È necessaria una key per le API di OpenAI, ottenibile registrandosi su [OpenAI API Platform](https://openai.com/api/). 
-La key puó essere salvata in un file ".env" nella root della repository.
+La key puó essere salvata in un file `.env` nella root della repository, il cui corpo deve essere il seguente, sostituendo `<api-key>` con la chiave ottenuta:
+  `OPENAI_API_KEY=<api-key>`
 
   ### Eseguire localmente:
   `chmod +x gradlew && ./gradlew clean shadowJar`

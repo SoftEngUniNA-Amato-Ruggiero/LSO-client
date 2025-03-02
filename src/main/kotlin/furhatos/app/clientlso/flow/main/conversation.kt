@@ -42,6 +42,7 @@ val conversation: (Personality?) -> State = { personality ->
                 random {
                     +"uhm"
                     +"allora"
+                    +""
                 }
             }
 

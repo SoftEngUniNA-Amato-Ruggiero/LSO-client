@@ -11,19 +11,19 @@ class PersonalityTest {
         const val MINIMUM_SCORE = 1
         const val MAXIMUM_SCORE = 7
 
-        const val TEST_DESCRIPTION = "Da $MINIMUM_SCORE a $MAXIMUM_SCORE, quanto pensi di essere..." //TODO: Cosí è al femminile, rendere gender neutral
+        const val TEST_DESCRIPTION = "Da $MINIMUM_SCORE a $MAXIMUM_SCORE, quanto pensi di essere una persona "
 
         val QUESTIONS: Map<Attributes, String> = EnumMap<Attributes, String>(Attributes::class.java).apply {
-            put(Attributes.EXTROVERTED, "Estroversa, esuberante.")
-            put(Attributes.CRITICAL, "Polemica, litigiosa.")
-            put(Attributes.DEPENDABLE, "Affidabile, auto-disciplinata.")
-            put(Attributes.ANXIOUS, "Ansiosa, che si agita facilmente.")
-            put(Attributes.COMPLEX, "Aperta alle nuove esperienze, con molti interessi.")
-            put(Attributes.RESERVED, "Riservata, silenziosa.")
-            put(Attributes.SYMPATHETIC, "Comprensiva, affettuosa.")
-            put(Attributes.DISORGANIZED, "Disorganizzata, distratta.")
-            put(Attributes.CALM, "Tranquilla, emotivamente stabile.")
-            put(Attributes.CONVENTIONAL, "Tradizionalista, abitudinaria.")
+            put(Attributes.EXTROVERTED, "Estroversa, esuberante?")
+            put(Attributes.CRITICAL, "Polemica, litigiosa?")
+            put(Attributes.DEPENDABLE, "Affidabile, auto-disciplinata?")
+            put(Attributes.ANXIOUS, "Ansiosa, che si agita facilmente?")
+            put(Attributes.COMPLEX, "Aperta alle nuove esperienze e con molti interessi?")
+            put(Attributes.RESERVED, "Riservata, silenziosa?")
+            put(Attributes.SYMPATHETIC, "Comprensiva, affettuosa?")
+            put(Attributes.DISORGANIZED, "Disorganizzata, distratta?")
+            put(Attributes.CALM, "Tranquilla, emotivamente stabile?")
+            put(Attributes.CONVENTIONAL, "Tradizionalista, abitudinaria?")
         }
     }
 

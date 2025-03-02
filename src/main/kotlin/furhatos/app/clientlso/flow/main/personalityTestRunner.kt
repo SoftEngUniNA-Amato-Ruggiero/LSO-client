@@ -5,8 +5,6 @@ import furhatos.app.clientlso.flow.Parent
 import furhatos.app.clientlso.personality.Personality
 import furhatos.app.clientlso.personality.PersonalityTest
 import furhatos.flow.kotlin.*
-import io.github.sashirestela.openai.domain.chat.ChatMessage
-import io.github.sashirestela.openai.domain.chat.ChatRequest
 
 val test = PersonalityTest()
 val iterator = PersonalityTest.QUESTIONS.iterator()
@@ -43,7 +41,7 @@ val personalityTestRunner: State = state(Parent) {
     }
 
     onNoResponse {
-        furhat.ask("Hai provato a dire qualcosa? Scusami, non ho sentito. Ti avevo chiesto: $question")
+        furhat.ask("Hai provato a dire qualcosa? Scusami, non ho sentito. Ti avevo chiesto: ${PersonalityTest.TEST_DESCRIPTION} $question")
     }
 }
 
@@ -58,7 +56,7 @@ fun getCustomQuestion(): String {
 //        val chatResponse = futureChat.join()
 //        return chatResponse.firstContent().toString()
 //    } catch (e: Exception) {
-        return PersonalityTest.TEST_DESCRIPTION + question
+    return PersonalityTest.TEST_DESCRIPTION + question
 //    }
 }
 

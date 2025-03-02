@@ -1,16 +1,17 @@
 package furhatos.app.clientlso.flow.main
 
 import furhatos.app.clientlso.flow.Parent
-import furhatos.flow.kotlin.State
-import furhatos.flow.kotlin.furhat
-import furhatos.flow.kotlin.onResponse
-import furhatos.flow.kotlin.state
+import furhatos.flow.kotlin.*
 import furhatos.nlu.common.No
 import furhatos.nlu.common.Yes
 
 val Greeting: State = state(Parent) {
     onEntry {
         furhat.ask("Ciao! Posso farti qualche domanda per conoscerti meglio?")
+    }
+
+    onReentry {
+        furhat.listen()
     }
 
     onResponse<Yes> {
@@ -25,6 +26,11 @@ val Greeting: State = state(Parent) {
 
     onResponse {
         furhat.say("Non ho capito, puoi ripetere?")
+        reentry()
+    }
+
+    onNoResponse {
+        furhat.say("Scusa, hai detto qualcosa? Non ho sentito nulla.")
         reentry()
     }
 }

@@ -1,6 +1,5 @@
 package furhatos.app.clientlso.flow.main
 
-//import furhatos.app.clientlso.askOpenAI
 import furhatos.app.clientlso.flow.Parent
 import furhatos.app.clientlso.getApiKey
 import furhatos.app.clientlso.personality.Personality
@@ -49,7 +48,7 @@ val conversation: (Personality?) -> State = { personality ->
             val robotResponse = call {
                 getDialogCompletion()
             } as String?
-            furhat.ask(robotResponse?:"Scusa, non ho capito. Puoi ripetere?")
+            furhat.ask(robotResponse ?: "Scusa, non ho capito. Puoi ripetere?")
             reentry()
         }
 
@@ -68,13 +67,14 @@ val conversation: (Personality?) -> State = { personality ->
 fun getDialogCompletion(): String {
     val chatRequestBuilder = ChatRequest.builder()
         .model("gpt-4o-mini")
-        .message(ChatMessage.SystemMessage.of(personalityModifier?: "Rispondi brevemente"))
+        .message(ChatMessage.SystemMessage.of(personalityModifier ?: "Rispondi brevemente"))
 
     Furhat.dialogHistory.all.takeLast(10).forEach {
         when (it) {
             is DialogHistory.ResponseItem -> {
                 chatRequestBuilder.message(ChatMessage.UserMessage.of(it.response.text))
             }
+
             is DialogHistory.UtteranceItem -> {
                 chatRequestBuilder.message(ChatMessage.AssistantMessage.of(it.toText()))
             }

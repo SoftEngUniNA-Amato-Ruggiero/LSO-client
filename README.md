@@ -25,7 +25,7 @@ Il template di partenza utilizzato è `Blank skill` di [FurhatRobotics](https://
 - [Docker](https://www.docker.com/) (per eseguire su container).
 - Emulatore di Furhat, ottenibile registrandosi su [Furhat.io](https://furhat.io/).
 - Key per le API di OpenAI, ottenibile registrandosi su [OpenAI API Platform](https://openai.com/api/).
-  La key deve essere salvata tra le variabili d'ambiente.
+  La key deve essere salvata tra le variabili d'ambiente col nome `OPENAI_API_KEY`.
 
 ### Eseguire localmente:
 

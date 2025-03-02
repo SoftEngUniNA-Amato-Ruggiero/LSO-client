@@ -8,6 +8,7 @@ import furhatos.flow.kotlin.State
 import furhatos.flow.kotlin.furhat
 import furhatos.flow.kotlin.state
 import furhatos.flow.kotlin.users
+import furhatos.flow.kotlin.voice.PollyNeuralVoice
 import furhatos.flow.kotlin.voice.Voice
 import furhatos.util.Language
 
@@ -16,7 +17,8 @@ val Init: State = state {
         /** Set our default interaction parameters */
         users.setSimpleEngagementPolicy(DISTANCE_TO_ENGAGE, MAX_NUMBER_OF_USERS)
         furhat.setInputLanguage(Language.ITALIAN)
-        furhat.setVoice(Voice("Bianca"))
+//        furhat.setVoice(Voice("Bianca"))
+        furhat.setVoice(PollyNeuralVoice("Bianca"))
     }
     onEntry {
         /** start interaction */

@@ -1,4 +1,4 @@
-FROM docker.io/eclipse-temurin:11
+FROM docker.io/eclipse-temurin:8
 
 COPY . /usr/src/lso-client
 WORKDIR /usr/src/lso-client

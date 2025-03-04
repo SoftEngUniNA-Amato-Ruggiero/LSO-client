@@ -5,7 +5,7 @@ RUN chmod +x gradlew && \
     ./gradlew clean shadowJar
 
     
-FROM docker.io/eclipse-temurin:8-jre
+FROM docker.io/eclipse-temurin:11-jre
 COPY --from=build /usr/src/lso-client/build/libs/lso-client-all.skill /usr/app/lso-client-all.skill
 WORKDIR /usr/app
 ENTRYPOINT ["java", "-jar", "lso-client-all.skill"]

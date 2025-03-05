@@ -35,12 +35,17 @@ val conversation: (Personality?) -> State = { personality ->
             furhat.listen()
         }
 
+        onResponse<Goodbye> {
+            furhat.say("Va bene, ciao!")
+            goto(Idle)
+        }
+
         onResponse {
             furhat.say(async = true) {
                 +Gestures.GazeAway
                 random {
-                    +"uhm"
-                    +"allora"
+                    +"Ah."
+                    +"Allora..."
                     +""
                 }
             }

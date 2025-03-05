@@ -32,8 +32,9 @@ val personalityTestRunner: State = state(Parent) {
         if (iterator.hasNext()) {
             furhat.say {
                 random {
-                    +"Ok, e invece..."
+                    +"Ok! e..."
                     +"Poi..."
+                    +"Ah, sì? E..."
                     +""
                 }
             }

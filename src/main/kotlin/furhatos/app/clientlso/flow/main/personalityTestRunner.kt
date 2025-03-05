@@ -8,30 +8,35 @@ import furhatos.flow.kotlin.*
 
 val test = PersonalityTest()
 val iterator = PersonalityTest.QUESTIONS.iterator()
-
-//THIS IS HORRIBLE, BUT IT WORKS FOR NOW
-var attribute = PersonalityTest.Attributes.SYMPATHETIC
-var question = ""
+var iteratorCurr: Map.Entry<PersonalityTest.Attributes, String> = PersonalityTest.QUESTIONS.entries.first()
 
 val personalityTestRunner: State = state(Parent) {
     onEntry {
-        val (attr, quest) = iterator.next()
-        attribute = attr
-        question = quest
-        furhat.ask(getCustomQuestion())
+        furhat.say(PersonalityTest.TEST_DESCRIPTION)
+        reentry()
+    }
+
+    onReentry {
+        iteratorCurr = iterator.next()
+        furhat.ask(getQuestion())
     }
 
     onResponse {
         try {
             val score = it.text.toInt()
-            test.setAnswer(attribute, score)
+            test.setAnswer(iteratorCurr.key, score)
         } catch (e: Exception) {
-            furhat.say("Hai detto " + it.text + "? Scusa, non ho capito.")
-            delay(500)
-            furhat.ask(getCustomQuestion())
+            furhat.ask("Hai detto " + it.text + "? Scusa, puoi ripetere?")
         }
 
         if (iterator.hasNext()) {
+            furhat.say {
+                random {
+                    +"Ok, e invece..."
+                    +"Poi..."
+                    +""
+                }
+            }
             reentry()
         } else {
             val personality = getPersonalityFromServer(test.getAnswers())
@@ -41,23 +46,16 @@ val personalityTestRunner: State = state(Parent) {
     }
 
     onNoResponse {
-        furhat.ask("Hai provato a dire qualcosa? Scusami, non ho sentito. Ti avevo chiesto: ${PersonalityTest.TEST_DESCRIPTION} $question")
+        furhat.ask(
+            "Hai provato a dire qualcosa? Scusami, non ho sentito. Ti avevo chiesto: " +
+                    getQuestion()
+        )
     }
 }
 
-// Nota: purtroppo il piano gratuito di OpenAI non permette di fare cosí tante richieste in cosí poco tempo
-fun getCustomQuestion(): String {
-//    try {
-//        val chatRequestBuilder = ChatRequest.builder()
-//            .model("gpt-3.5-turbo")
-//            .message(ChatMessage.SystemMessage.of("Riformula questa domanda, in maniera sintetica ma con creativitá: " + PersonalityTest.TEST_DESCRIPTION + question))
-//
-//        val futureChat = openAI.chatCompletions().create(chatRequestBuilder.build())
-//        val chatResponse = futureChat.join()
-//        return chatResponse.firstContent().toString()
-//    } catch (e: Exception) {
-    return PersonalityTest.TEST_DESCRIPTION + question
-//    }
+fun getQuestion(): String {
+    val question = iteratorCurr.value
+    return "Quanto ritieni di essere una persona $question?"
 }
 
 private fun getPersonalityFromServer(answers: Map<PersonalityTest.Attributes, Int>): Personality {

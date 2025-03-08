@@ -21,7 +21,7 @@ Il template di partenza utilizzato è `Blank skill` di [FurhatRobotics](https://
 
 ### Requirements
 
-- [Java SDK versione 8](https://adoptium.net/temurin/releases/?package=jdk&version=8) (per eseguire localmente).
+- [Java SDK versione 11](https://adoptium.net/temurin/releases/?package=jdk&version=11) (per eseguire localmente).
 - [Docker](https://www.docker.com/) (per eseguire su container).
 - Furhat SDK, ottenibile registrandosi su [Furhat.io](https://furhat.io/).
 - Key per le API di OpenAI, ottenibile registrandosi su [OpenAI API Platform](https://openai.com/api/).

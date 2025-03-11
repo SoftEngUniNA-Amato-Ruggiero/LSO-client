@@ -53,7 +53,11 @@ val conversation: (Personality?) -> State = { personality ->
             val robotResponse = call {
                 getDialogCompletion()
             } as String?
-            furhat.ask(robotResponse ?: "Scusa, non ho capito. Puoi ripetere?")
+            val (gesture, response) = getGesture(robotResponse)
+            furhat.ask {
+                +gesture
+                response ?: "Scusa, non ho capito. Puoi ripetere?"
+            }
             reentry()
         }
 
@@ -72,7 +76,11 @@ val conversation: (Personality?) -> State = { personality ->
 fun getDialogCompletion(): String {
     val chatRequestBuilder = ChatRequest.builder()
         .model("gpt-4o-mini")
-        .message(ChatMessage.SystemMessage.of(personalityModifier ?: "Rispondi brevemente"))
+        .message(
+            ChatMessage.SystemMessage.of(
+                personalityModifier ?: "Usando al massimo una sola emoji, rispondi brevemente."
+            )
+        )
 
     Furhat.dialogHistory.all.takeLast(10).forEach {
         when (it) {
@@ -92,7 +100,7 @@ fun getDialogCompletion(): String {
 }
 
 private fun getPersonalityModifier(personality: Personality): String {
-    var personalityModifier = "Rispondi brevemente come una persona"
+    var personalityModifier = "Usa al massimo una sola emoji. Rispondi brevemente come una persona"
 
     if (personality.get(Personality.Traits.EXTROVERSION) < 4) {
         personalityModifier += " timida,"

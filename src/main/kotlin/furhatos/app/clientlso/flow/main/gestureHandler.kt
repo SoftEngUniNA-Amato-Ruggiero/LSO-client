@@ -3,6 +3,30 @@ package furhatos.app.clientlso.flow.main
 import furhatos.gestures.Gesture
 import furhatos.gestures.Gestures
 
+val happyEmojis = setOf(
+    "😊", "😀", "😃", "😄", "😁", "😆", "😅", "😂", "🤣", "😇", "🙂", "😍", "🥰", "😎", "😋"
+)
+
+val sadEmojis = setOf(
+    "☹️", "🙁", "😟", "😞", "😢", "😭", "😿", "😔", "😕", "😣", "😖", "😫", "😩"
+)
+
+val angryEmojis = setOf(
+    "😠", "😡", "🤬", "👿", "💢", "😤", "😾"
+)
+
+val shyEmojis = setOf(
+    "😳", "😶", "🙈", "🙉", "🙊", "😔", "😬", "😅", "🤭"
+)
+
+val disgustedEmojis = setOf(
+    "🤢", "🤮", "😷", "😵", "😵‍💫", "😷", "🤒", "🤕"
+)
+
+val surprisedEmojis = setOf(
+    "😲", "😳", "😮", "😯", "😧", "😨", "😱", "😵", "🤯", "😲"
+)
+
 fun getGesture(openAIResponse: String?): Pair<Gesture, String?> {
     var response: String? = openAIResponse
     if (openAIResponse != null) {
@@ -14,20 +38,25 @@ fun getGesture(openAIResponse: String?): Pair<Gesture, String?> {
             Pair(Gestures.Blink, response)
         }
 
-        //Happyness
-        openAIResponse.contains("\uD83D\uDE00")
-                || openAIResponse.contains("\uD83D\uDE03") -> {
+        happyEmojis.any{openAIResponse.contains(it)} -> {
             Pair(Gestures.Smile, response)
         }
 
-        //Sadness
-        openAIResponse.contains("\uD83D\uDE41") -> {
-            Pair(Gestures.BrowFrown, response)
+        sadEmojis.any{openAIResponse.contains(it)} -> {
+            Pair(Gestures.ExpressSad, response)
         }
 
-        //TODO: Anger
+        angryEmojis.any{openAIResponse.contains(it)} -> {
+            Pair(Gestures.ExpressAnger, response)
+        }
 
-        //TODO: Shy
+        shyEmojis.any{openAIResponse.contains(it)} -> {
+            Pair(Gestures.ExpressFear, response)
+        }
+
+        disgustedEmojis.any{openAIResponse.contains(it)} -> {
+            Pair(Gestures.ExpressDisgust, response)
+        }
 
         else -> {
             Pair(Gestures.Blink, response)

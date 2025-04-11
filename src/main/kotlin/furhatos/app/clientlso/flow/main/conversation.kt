@@ -42,7 +42,7 @@ val conversation: (Personality?) -> State = { personality ->
 
         onResponse {
             furhat.say(async = true) {
-                +Gestures.GazeAway
+                +Gestures.Thoughtful
                 random {
                     +"Ah."
                     +"Allora..."
@@ -52,11 +52,13 @@ val conversation: (Personality?) -> State = { personality ->
 
             val robotResponse = call {
                 getDialogCompletion()
-            } as String?
+            } as String
+
+            print(robotResponse)
             val (gesture, response) = getGesture(robotResponse)
             furhat.ask {
                 +gesture
-                response ?: "Scusa, non ho capito. Puoi ripetere?"
+                +(response ?: "Scusa, non ho capito. Puoi ripetere?")
             }
             reentry()
         }
@@ -78,7 +80,7 @@ fun getDialogCompletion(): String {
         .model("gpt-4o-mini")
         .message(
             ChatMessage.SystemMessage.of(
-                personalityModifier ?: "Usando al massimo una sola emoji, rispondi brevemente."
+                personalityModifier ?: "Rispondi usando emoji in modo creativo."
             )
         )
 
@@ -100,7 +102,7 @@ fun getDialogCompletion(): String {
 }
 
 private fun getPersonalityModifier(personality: Personality): String {
-    var personalityModifier = "Usa al massimo una sola emoji. Rispondi brevemente come una persona"
+    var personalityModifier = "Usa emoji in modo creativo e rispondi brevemente come una persona"
 
     if (personality.get(Personality.Traits.EXTROVERSION) < 4) {
         personalityModifier += " timida,"

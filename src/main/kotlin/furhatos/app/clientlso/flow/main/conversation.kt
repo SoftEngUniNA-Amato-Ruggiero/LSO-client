@@ -42,7 +42,7 @@ val conversation: (Personality?) -> State = { personality ->
 
         onResponse {
             furhat.say(async = true) {
-                +Gestures.Thoughtful
+                +Gestures.GazeAway
                 random {
                     +"Ah."
                     +"Allora..."

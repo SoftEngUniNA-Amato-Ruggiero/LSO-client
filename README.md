@@ -30,6 +30,8 @@ Il template di partenza utilizzato è `Blank skill` di [FurhatRobotics](https://
     - Il percorso del file deve essere salvato tra le variabili d'ambiente
       col nome `OPENAI_API_KEY_FILE`.
         - Esempio: `export OPENAI_API_KEY_FILE=/path/to/openai_api_key.txt`
+- Indirizzo IP del robot, che deve essere salvato tra le variabili d'ambiente col nome `ROBOT_ADDRESS`
+- Indirizzo IP del server, che deve essere salvato tra le variabili d'ambiente col nome `SERVER_ADDRESS`
 
 ### Eseguire localmente:
 
@@ -38,7 +40,7 @@ Il template di partenza utilizzato è `Blank skill` di [FurhatRobotics](https://
    chmod +x gradlew && ./gradlew clean shadowJar
 2. Esecuzione del jar su JVM:
    ```sh
-   java -jar build/libs/lso-client-all.skill
+   java -Dfurhatos.skills.brokeraddress=$ROBOT_ADDRESS -jar build/libs/lso-client-all.skill $SERVER_ADDRESS
 
 ### Eseguire su container:
 
@@ -47,4 +49,4 @@ Il template di partenza utilizzato è `Blank skill` di [FurhatRobotics](https://
     docker build -t lso-client .
 2. Esecuzione del container:
    ```sh
-    docker run -it -e OPENAI_API_KEY_FILE=$OPENAI_API_KEY_FILE --rm --name running-lso-client lso-client
+    docker run -e OPENAI_API_KEY_FILE=$OPENAI_API_KEY_FILE -e ROBOT_ADDRESS=$ROBOT_ADDRESS -e SERVER_ADDRESS=$SERVER_ADDRESS --name running-lso-client lso-client

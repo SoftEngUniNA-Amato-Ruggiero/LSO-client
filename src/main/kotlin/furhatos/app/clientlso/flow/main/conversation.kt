@@ -135,3 +135,23 @@ private fun getPersonalityModifier(personality: Personality): String {
     }
     return personalityModifier
 }
+
+//TODO: Testare e rimpiazzare quella sopra
+private fun getPersonalityModifier_v2(personality: Personality): String {
+    var personalityModifier = "Usa emoji in modo creativo e rispondi brevemente come una persona " +=
+        getPersonalityTraitScore(Personality.Traits.EXTROVERSION, "timida,", "estroversa, ") += 
+        getPersonalityTraitScore(Personality.Traits.AGREEABLENESS, "scortese, ", "simpatica, ") +=
+        getPersonalityTraitScore(Personality.Traits.CONSCIENTIOUSNESS, "distratta, ", "affidabile, ") +=
+        getPersonalityTraitScore(Personality.Traits.EMOTIONAL_STABILITY, "instabile, ", "stabile, ") +=
+        getPersonalityTraitScore(Personality.Traits.OPENNESS, "noiosa.", "creativa.")
+
+    return personalityModifier
+}
+
+private fun getPersonalityTraitScore(trait: int, negative: String, positive: String) {
+    if (trait < 4) {
+        return negative
+    } else {
+        return positive
+    }
+}

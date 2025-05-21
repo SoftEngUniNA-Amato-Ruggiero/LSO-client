@@ -3,6 +3,7 @@ package furhatos.app.clientlso.flow.main
 import furhatos.app.clientlso.flow.Parent
 import furhatos.app.clientlso.getApiKey
 import furhatos.app.clientlso.personality.Personality
+import furhatos.app.clientlso.personality.Personality.Traits
 import furhatos.flow.kotlin.*
 import furhatos.gestures.Gestures
 import furhatos.nlu.common.Goodbye
@@ -13,6 +14,14 @@ import io.github.sashirestela.openai.domain.chat.ChatRequest
 
 /** Open AI API Key **/
 private val serviceKey = getApiKey()
+
+val TRAIT_DESCRIPTION: Map<Traits, Pair<String, String>> = mapOf(
+    Traits.EXTROVERSION to ("timida," to "estroversa, "),
+    Traits.AGREEABLENESS to ("scortese, " to "simpatica, "),
+    Traits.CONSCIENTIOUSNESS to ("distratta, " to "affidabile, "),
+    Traits.EMOTIONAL_STABILITY to ("instabile, " to "stabile, "),
+    Traits.OPENNESS to ("noiosa." to "creativa.")
+)
 
 var personalityModifier: String? = null
 
@@ -101,57 +110,15 @@ fun getDialogCompletion(): String {
     return chatResponse.firstContent().toString()
 }
 
-private fun getPersonalityModifier(personality: Personality): String {
-    var personalityModifier = "Usa emoji in modo creativo e rispondi brevemente come una persona"
-
-    if (personality.get(Personality.Traits.EXTROVERSION) < 4) {
-        personalityModifier += " timida,"
-    } else {
-        personalityModifier += " estroversa,"
+private fun getPersonalityModifier(personality: Personality): String? {
+    val traitString = StringBuilder()
+    for (trait in TRAIT_DESCRIPTION.keys) {
+        traitString.append(getPersonalityTraitScore(personality, trait))
     }
-
-    if (personality.get(Personality.Traits.AGREEABLENESS) < 4) {
-        personalityModifier += " scortese, "
-    } else {
-        personalityModifier += " simpatica, "
-    }
-
-    if (personality.get(Personality.Traits.CONSCIENTIOUSNESS) < 4) {
-        personalityModifier += " distratta, "
-    } else {
-        personalityModifier += " affidabile, "
-    }
-
-    if (personality.get(Personality.Traits.EMOTIONAL_STABILITY) < 4) {
-        personalityModifier += " instabile, "
-    } else {
-        personalityModifier += " stabile, "
-    }
-
-    if (personality.get(Personality.Traits.OPENNESS) < 4) {
-        personalityModifier += " noiosa."
-    } else {
-        personalityModifier += " creativa."
-    }
-    return personalityModifier
+    return "Usa emoji in modo creativo e rispondi brevemente come una persona $traitString"
 }
 
-//TODO: Testare e rimpiazzare quella sopra
-private fun getPersonalityModifier_v2(personality: Personality): String {
-    var personalityModifier = "Usa emoji in modo creativo e rispondi brevemente come una persona " +=
-        getPersonalityTraitScore(Personality.Traits.EXTROVERSION, "timida,", "estroversa, ") += 
-        getPersonalityTraitScore(Personality.Traits.AGREEABLENESS, "scortese, ", "simpatica, ") +=
-        getPersonalityTraitScore(Personality.Traits.CONSCIENTIOUSNESS, "distratta, ", "affidabile, ") +=
-        getPersonalityTraitScore(Personality.Traits.EMOTIONAL_STABILITY, "instabile, ", "stabile, ") +=
-        getPersonalityTraitScore(Personality.Traits.OPENNESS, "noiosa.", "creativa.")
-
-    return personalityModifier
-}
-
-private fun getPersonalityTraitScore(trait: int, negative: String, positive: String) {
-    if (trait < 4) {
-        return negative
-    } else {
-        return positive
-    }
+private fun getPersonalityTraitScore(personality: Personality, trait: Personality.Traits): String {
+    val (negative, positive) = TRAIT_DESCRIPTION[trait] ?: error("Trait not found")
+    return if (personality.get(trait) < 4) negative else positive
 }
